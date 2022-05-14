@@ -14,13 +14,13 @@ Shop::Shop(int cashboxAmount, int clientsIntensity, int processingSpeed, int ave
 }
 
 Client *Shop::getClient() {
-    std::vector<int> check(averageQuantity);
+    std::vector<int> receipt(averageQuantity);
 
     for (int i = 0; i < averageQuantity; i++) {
-        check[i] = std::rand() % 40 + 1;
+        receipt[i] = std::rand() % 40 + 1;
     }
 
-    return new Client(check);
+    return new Client(receipt);
 }
 
 void Shop::startShopping() {
@@ -64,17 +64,17 @@ void Shop::serveQueue(std::queue<Client*>* client) {
                 number_of_served_customers++;
             }
 
-            std::unique_lock<std::mutex> my_lock(mutex);
+            std::unique_lock<std::mutex> lock(mutex);
             numberOfQueues += count;
             numberOfReceipts++;
-            my_lock.unlock();
+            lock.unlock();
         }
     }
 }
 
 void Shop::serveShop() {
     srand(time(NULL));
-    int active_lines = 0;
+    int currentQueues = 0;
 
     for (int i = 0; i < maximumQueue; i++) {
         numberOfWorkingCashboxes = 0;
@@ -85,24 +85,24 @@ void Shop::serveShop() {
             }
         }
 
-        bool free_line = false;
+        bool isFree = false;
         std::this_thread::sleep_for(std::chrono::milliseconds(clientsIntensity));
 
         for (auto it = lines.begin(); it != lines.end(); it++) {
             if ((*it)->size() < queueLength) {
                 (*it)->push(getClient());
-                free_line = true;
+                isFree = true;
                 break;
             }
         }
 
-        if (!free_line) {
-            if (active_lines < cashboxAmount) {
-                active_lines++;
-                auto new_line = new std::queue <Client*>;
-                new_line->push(getClient());
-                lines.push_back(new_line);
-                cashboxes_WIP.push_back(new std::thread(&Shop::serveQueue, this, new_line));
+        if (!isFree) {
+            if (currentQueues < cashboxAmount) {
+                currentQueues++;
+                auto nextQueue = new std::queue <Client*>;
+                nextQueue->push(getClient());
+                lines.push_back(nextQueue);
+                cashboxes_WIP.push_back(new std::thread(&Shop::serveQueue, this, nextQueue));
             }
             else {
                 notServedCustomers++;
