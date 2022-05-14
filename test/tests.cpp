@@ -3,7 +3,7 @@
 #include "../include/task.h"
 
 TEST(task1, test1) {
-	  int cashboxes = 2;
+    int cashboxes = 2;
     int intensity = 30;
     int speed = 10;
     int averageProducts = 3;
@@ -12,6 +12,20 @@ TEST(task1, test1) {
     Shop supermarket(cashboxes, intensity, speed, averageProducts, clients);
     supermarket.startShopping();
   
-  	int result = supermarket.getAmountOfNotServedCustomers();
-  	EXPECT_EQ(0, result);
+    int result = supermarket.getAmountOfNotServedCustomers();
+    EXPECT_EQ(0, result);
+}
+
+TEST(task2, test2) {
+    int cashboxes = 2;
+    int intensity = 30;
+    int speed = 10;
+    int averageProducts = 3;
+    int clients = 4;
+  
+    Shop supermarket(cashboxes, intensity, speed, averageProducts, clients);
+    supermarket.startShopping();
+  
+    int result = supermarket.getAmountOfServedCustomers();
+    EXPECT_EQ(4, result);
 }
