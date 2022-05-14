@@ -1,4 +1,4 @@
-// Copyright 2021 GHA Test Team
+// Copyright 2022 GHA Test Team
 #include <gtest/gtest.h>
 #include "../include/task.h"
 
@@ -13,7 +13,7 @@ TEST(TEST1, test1) {
     supermarket.startShopping();
   
     int result = supermarket.getAmountOfNotServedCustomers();
-    ASSERT_EQ(supermarket.getAmountOfNotServedCustomers(), 0);
+    ASSERT_EQ(result, 0);
 }
 
 TEST(TEST2, test2) {
