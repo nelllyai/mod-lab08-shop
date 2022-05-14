@@ -13,7 +13,7 @@ Shop::Shop(int cashboxAmount, int clientsIntensity, int processingSpeed, int ave
     this->maximumQueue = maximumQueue;
 }
 
-Client *Shop::getClient() {
+Client* Shop::getClient() {
     std::vector<int> receipt(averageQuantity);
 
     for (int i = 0; i < averageQuantity; i++) {
@@ -46,22 +46,22 @@ void Shop::serveClient(Client* client, int number) {
         lock.unlock();
     }
 
-    servedCustomers++;
+    servedClients++;
 }
 
 void Shop::serveQueue(std::queue<Client*>* client) {
-    int number_of_served_customers = 1;
+    int amountServerClients = 1;
     while (!isFinished) {
         if (!client->empty()) {
             int count = 0;
             std::queue<int>* prevs = new std::queue<int>();
 
             while (!client->empty()) {
-                auto customer = client->front();
-                serveClient(customer, number_of_served_customers);
+                auto newClient = client->front();
+                serveClient(newClient, amountServerClients);
                 client->pop();
                 count++;
-                number_of_served_customers++;
+                amountServerClients++;
             }
 
             std::unique_lock<std::mutex> lock(mutex);
@@ -79,7 +79,7 @@ void Shop::serveShop() {
     for (int i = 0; i < maximumQueue; i++) {
         numberOfWorkingCashboxes = 0;
 
-        for (auto it = lines.begin(); it != lines.end(); it++) {
+        for (auto it = queues.begin(); it != queues.end(); it++) {
             if ((*it)->size() > 0) {
                 numberOfWorkingCashboxes++;
             }
@@ -88,7 +88,7 @@ void Shop::serveShop() {
         bool isFree = false;
         std::this_thread::sleep_for(std::chrono::milliseconds(clientsIntensity));
 
-        for (auto it = lines.begin(); it != lines.end(); it++) {
+        for (auto it = queues.begin(); it != queues.end(); it++) {
             if ((*it)->size() < queueLength) {
                 (*it)->push(getClient());
                 isFree = true;
@@ -101,11 +101,11 @@ void Shop::serveShop() {
                 currentQueues++;
                 auto nextQueue = new std::queue <Client*>;
                 nextQueue->push(getClient());
-                lines.push_back(nextQueue);
+                queues.push_back(nextQueue);
                 workingCashboxes.push_back(new std::thread(&Shop::serveQueue, this, nextQueue));
             }
             else {
-                notServedCustomers++;
+                notServedClients++;
             }
         }
     }
@@ -114,12 +114,12 @@ void Shop::serveShop() {
 }
 
 
-int Shop::getAmountOfServedCustomers() {
-    return servedCustomers;
+int Shop::getAmountOfServedClients() {
+    return servedClients;
 }
 
-int Shop::getAmountOfNotServedCustomers() {
-    return notServedCustomers;
+int Shop::getAmountOfNotServedClients() {
+    return notServedClients;
 }
 
 double Shop::getAverageQueueLength() {
