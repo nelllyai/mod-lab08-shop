@@ -12,8 +12,8 @@ int main()
     Shop supermarket(cashboxes, intensity, speed, averageProducts, clients);
     supermarket.startShopping();
 
-    std::cout << "Not served customers: " << supermarket.getAmountOfNotServedCustomers() << std::endl;
-    std::cout << "Served customers: " << supermarket.getAmountOfServedCustomers() << std::endl;
+    std::cout << "Not served customers: " << supermarket.getAmountOfServedClients() << std::endl;
+    std::cout << "Served customers: " << supermarket.getAmountOfNotServedClients() << std::endl;
     std::cout << "Average queue length: " << supermarket.getAverageQueueLength() << std::endl;
     std::cout << "Average client time: " << supermarket.getAverageClientTime() << std::endl;
     std::cout << "Average cashbox worktime: " << supermarket.getAverageCashboxWorktime() << std::endl;
