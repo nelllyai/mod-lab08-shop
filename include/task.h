@@ -14,15 +14,15 @@ public:
 
 class Shop {
 private:
-    // âõîäíûå äàííûå
-    int cashboxAmount; // êîëè÷åñòâî êàññ
-    int clientsIntensity; // èíòåíñèâíîñòü ïîòîêà ïîêóïàòåëåé
-    int processingSpeed; // ñêîðîñòü îáðàáîòêè òîâàðà íà êàññå
-    int averageQuantity; // ñðåäíåå êîëè÷åñòâî òîâàðîâ â òåëåæêå ïîêóïàòåëÿ
-    int maximumQueue; // ìàêñèìàëüíàÿ äëèíà î÷åðåäè
+    // входные данные
+    int cashboxAmount; // количество касс
+    int clientsIntensity; // интенсивность потока покупателей
+    int processingSpeed; // скорость обработки товара на кассе
+    int averageQuantity; // среднее количество товаров в тележке покупателя
+    int maximumQueue; // максимальная длина очереди
 
 
-    // âíóòðåííèå äàííûå
+    // внутренние данные
     int queueLength = 3;
     bool isFinished = false;
     int numberOfWorkingCashboxes = 0;
@@ -32,13 +32,13 @@ private:
     std::vector<std::queue<Client*>*> lines;
     std::mutex mutex;
 
-    // ñáîð ñòàòèñòèêè
-    int servedCustomers; // îáñëóæåííûå êëèåíòû
-    int notServedCustomers; // íåîáñëóæåííûå êëèåíòû
-    double averageQueueLength; // ñðåäíÿÿ äëèíà î÷åðåäè
-    double averageClientTime; // ñðåäíåå âðåìÿ íàõîæäåíèå ïîêóïàòåëÿ â î÷åðåäè è íà êàññå
-    double averageCashboxWorktime; // ñðåäíåå âðåìÿ ðàáîòû êàññû
-    double averageCashboxDowntime; // ñðåäíåå âðåìÿ ïðîñòîÿ êàññû
+    // сбор статистики
+    int servedCustomers; // обслуженные клиенты
+    int notServedCustomers; // необслуженные клиенты
+    double averageQueueLength; // средняя длина очереди
+    double averageClientTime; // среднее время нахождение покупателя в очереди и на кассе
+    double averageCashboxWorktime; // среднее время работы кассы
+    double averageCashboxDowntime; // среднее время простоя кассы
 
 public:
     Client* getClient();
@@ -56,9 +56,9 @@ public:
     double getAverageCashboxWorktime();
     double getAverageCashboxDowntime();
 
-    // äîïîëíèòåëüíûå ðàñ÷åòû
+    // дополнительные расчеты
     double factorial(double n);
-    double getPrej(); // âåðîÿòíîñòü îòêàçà
-    double getQ(); // îòíîñèòåëüíàÿ ïðîïóñêíàÿ ñïîñîáíîñòü
-    double getA(); // àáñîëþòíàÿ ïðîïóñêíàÿ ñïîñîáíîñòü
+    double getPrej(); // вероятность отказа
+    double getQ(); // относительная пропускная способность
+    double getA(); // абсолютная пропускная способность
 };
