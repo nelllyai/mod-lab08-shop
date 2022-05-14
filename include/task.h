@@ -35,10 +35,10 @@ private:
     // сбор статистики
     int servedClients = 0; // обслуженные клиенты
     int notServedClients = 0; // необслуженные клиенты
-    double averageQueueLength; // средняя длина очереди
-    double averageClientTime; // среднее время нахождение покупателя в очереди и на кассе
-    double averageCashboxWorktime; // среднее время работы кассы
-    double averageCashboxDowntime; // среднее время простоя кассы
+    double averageQueueLength = 0.0; // средняя длина очереди
+    double averageClientTime = 0.0; // среднее время нахождение покупателя в очереди и на кассе
+    double averageCashboxWorktime = 0.0; // среднее время работы кассы
+    double averageCashboxDowntime = 0.0; // среднее время простоя кассы
 
 public:
     Client* getClient();
