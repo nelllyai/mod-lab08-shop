@@ -12,7 +12,7 @@ TEST(TEST1, test1) {
     Shop supermarket(cashboxes, intensity, speed, averageProducts, clients);
     supermarket.startShopping();
   
-    int result = supermarket.getAmountOfNotServedCustomers();
+    int result = supermarket.getAmountOfNotServedClients();
     ASSERT_EQ(result, 0);
 }
 
@@ -26,7 +26,7 @@ TEST(TEST2, test2) {
     Shop supermarket(cashboxes, intensity, speed, averageProducts, clients);
     supermarket.startShopping();
   
-    int result = supermarket.getAmountOfServedCustomers();
+    int result = supermarket.getAmountOfServedClients();
     ASSERT_EQ(result, 4);
 }
 
