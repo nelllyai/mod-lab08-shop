@@ -26,6 +26,6 @@ TEST(TEST2, test2) {
     Shop supermarket(cashboxes, intensity, speed, averageProducts, clients);
     supermarket.startShopping();
   
-    int result = 2 + 2;
+    int result = supermarket.getAmountOfServedCustomers();
     EXPECT_EQ(4, result);
 }
