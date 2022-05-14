@@ -4,7 +4,10 @@
 #include <random>
 #include <queue>
 #include <mutex>
+#include <list>
 #include <thread>
+#include <condition_variable>
+#include <functional>
 
 class Client {
 public:
