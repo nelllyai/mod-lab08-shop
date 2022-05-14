@@ -4,10 +4,7 @@
 #include <random>
 #include <queue>
 #include <mutex>
-#include <list>
 #include <thread>
-#include <condition_variable>
-#include <functional>
 
 class Client {
 public:
@@ -17,15 +14,15 @@ public:
 
 class Shop {
 private:
-    // входные данные
-    int cashboxAmount; // количество касс
-    int clientsIntensity; // интенсивность потока покупателей
-    int processingSpeed; // скорость обработки товара на кассе
-    int averageQuantity; // среднее количество товаров в тележке покупателя
-    int maximumQueue; // максимальная длина очереди
+    // ГўГµГ®Г¤Г­Г»ГҐ Г¤Г Г­Г­Г»ГҐ
+    int cashboxAmount; // ГЄГ®Г«ГЁГ·ГҐГ±ГІГўГ® ГЄГ Г±Г±
+    int clientsIntensity; // ГЁГ­ГІГҐГ­Г±ГЁГўГ­Г®Г±ГІГј ГЇГ®ГІГ®ГЄГ  ГЇГ®ГЄГіГЇГ ГІГҐГ«ГҐГ©
+    int processingSpeed; // Г±ГЄГ®Г°Г®Г±ГІГј Г®ГЎГ°Г ГЎГ®ГІГЄГЁ ГІГ®ГўГ Г°Г  Г­Г  ГЄГ Г±Г±ГҐ
+    int averageQuantity; // Г±Г°ГҐГ¤Г­ГҐГҐ ГЄГ®Г«ГЁГ·ГҐГ±ГІГўГ® ГІГ®ГўГ Г°Г®Гў Гў ГІГҐГ«ГҐГ¦ГЄГҐ ГЇГ®ГЄГіГЇГ ГІГҐГ«Гї
+    int maximumQueue; // Г¬Г ГЄГ±ГЁГ¬Г Г«ГјГ­Г Гї Г¤Г«ГЁГ­Г  Г®Г·ГҐГ°ГҐГ¤ГЁ
 
 
-    // внутренние данные
+    // ГўГ­ГіГІГ°ГҐГ­Г­ГЁГҐ Г¤Г Г­Г­Г»ГҐ
     int queueLength = 3;
     bool isFinished = false;
     int numberOfWorkingCashboxes = 0;
@@ -35,13 +32,13 @@ private:
     std::vector<std::queue<Client*>*> lines;
     std::mutex mutex;
 
-    // сбор статистики
-    int servedCustomers; // обслуженные клиенты
-    int notServedCustomers; // необслуженные клиенты
-    double averageQueueLength; // средняя длина очереди
-    double averageClientTime; // среднее время нахождение покупателя в очереди и на кассе
-    double averageCashboxWorktime; // среднее время работы кассы
-    double averageCashboxDowntime; // среднее время простоя кассы
+    // Г±ГЎГ®Г° Г±ГІГ ГІГЁГ±ГІГЁГЄГЁ
+    int servedCustomers; // Г®ГЎГ±Г«ГіГ¦ГҐГ­Г­Г»ГҐ ГЄГ«ГЁГҐГ­ГІГ»
+    int notServedCustomers; // Г­ГҐГ®ГЎГ±Г«ГіГ¦ГҐГ­Г­Г»ГҐ ГЄГ«ГЁГҐГ­ГІГ»
+    double averageQueueLength; // Г±Г°ГҐГ¤Г­ГїГї Г¤Г«ГЁГ­Г  Г®Г·ГҐГ°ГҐГ¤ГЁ
+    double averageClientTime; // Г±Г°ГҐГ¤Г­ГҐГҐ ГўГ°ГҐГ¬Гї Г­Г ГµГ®Г¦Г¤ГҐГ­ГЁГҐ ГЇГ®ГЄГіГЇГ ГІГҐГ«Гї Гў Г®Г·ГҐГ°ГҐГ¤ГЁ ГЁ Г­Г  ГЄГ Г±Г±ГҐ
+    double averageCashboxWorktime; // Г±Г°ГҐГ¤Г­ГҐГҐ ГўГ°ГҐГ¬Гї Г°Г ГЎГ®ГІГ» ГЄГ Г±Г±Г»
+    double averageCashboxDowntime; // Г±Г°ГҐГ¤Г­ГҐГҐ ГўГ°ГҐГ¬Гї ГЇГ°Г®Г±ГІГ®Гї ГЄГ Г±Г±Г»
 
 public:
     Client* getClient();
@@ -59,9 +56,9 @@ public:
     double getAverageCashboxWorktime();
     double getAverageCashboxDowntime();
 
-    // дополнительные расчеты
+    // Г¤Г®ГЇГ®Г«Г­ГЁГІГҐГ«ГјГ­Г»ГҐ Г°Г Г±Г·ГҐГІГ»
     double factorial(double n);
-    double getPrej(); // вероятность отказа
-    double getQ(); // относительная пропускная способность
-    double getA(); // абсолютная пропускная способность
+    double getPrej(); // ГўГҐГ°Г®ГїГІГ­Г®Г±ГІГј Г®ГІГЄГ Г§Г 
+    double getQ(); // Г®ГІГ­Г®Г±ГЁГІГҐГ«ГјГ­Г Гї ГЇГ°Г®ГЇГіГ±ГЄГ­Г Гї Г±ГЇГ®Г±Г®ГЎГ­Г®Г±ГІГј
+    double getA(); // Г ГЎГ±Г®Г«ГѕГІГ­Г Гї ГЇГ°Г®ГЇГіГ±ГЄГ­Г Гї Г±ГЇГ®Г±Г®ГЎГ­Г®Г±ГІГј
 };
