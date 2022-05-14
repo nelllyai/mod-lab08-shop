@@ -4,10 +4,7 @@
 #include <random>
 #include <queue>
 #include <mutex>
-#include <list>
 #include <thread>
-#include <condition_variable>
-#include <functional>
 
 class Client {
 public:
@@ -31,13 +28,13 @@ private:
     int numberOfWorkingCashboxes = 0;
     int numberOfQueues = 0;
     int numberOfReceipts = 0;
-    std::vector<std::thread*> cashboxes_WIP;
-    std::vector<std::queue<Client*>*> lines;
+    std::vector<std::thread*> workingCashboxes;
+    std::vector<std::queue<Client*>*> queues;
     std::mutex mutex;
 
     // сбор статистики
-    int servedCustomers = 0; // обслуженные клиенты
-    int notServedCustomers = 0; // необслуженные клиенты
+    int servedClients; // обслуженные клиенты
+    int notServedClients; // необслуженные клиенты
     double averageQueueLength; // средняя длина очереди
     double averageClientTime; // среднее время нахождение покупателя в очереди и на кассе
     double averageCashboxWorktime; // среднее время работы кассы
@@ -52,8 +49,8 @@ public:
     void serveQueue(std::queue<Client*>* customers);
     void serveShop();
 
-    int getAmountOfServedCustomers();
-    int getAmountOfNotServedCustomers();
+    int getAmountOfServedClients();
+    int getAmountOfNotServedClients();
     double getAverageQueueLength();
     double getAverageClientTime();
     double getAverageCashboxWorktime();
