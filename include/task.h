@@ -36,8 +36,8 @@ private:
     std::mutex mutex;
 
     // сбор статистики
-    int servedCustomers; // обслуженные клиенты
-    int notServedCustomers; // необслуженные клиенты
+    int servedCustomers = 0; // обслуженные клиенты
+    int notServedCustomers = 0; // необслуженные клиенты
     double averageQueueLength; // средняя длина очереди
     double averageClientTime; // среднее время нахождение покупателя в очереди и на кассе
     double averageCashboxWorktime; // среднее время работы кассы
