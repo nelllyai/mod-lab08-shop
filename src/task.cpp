@@ -26,8 +26,8 @@ Client *Shop::getClient() {
 void Shop::startShopping() {
     serveShop();
 
-    for (auto current_line : cashboxes_WIP) {
-        current_line->join();
+    for (auto currentQueue : workingCashboxes) {
+        currentQueue->join();
     }
 
     averageQueueLength = static_cast<double>(numberOfQueues / numberOfReceipts);
@@ -102,7 +102,7 @@ void Shop::serveShop() {
                 auto nextQueue = new std::queue <Client*>;
                 nextQueue->push(getClient());
                 lines.push_back(nextQueue);
-                cashboxes_WIP.push_back(new std::thread(&Shop::serveQueue, this, nextQueue));
+                workingCashboxes.push_back(new std::thread(&Shop::serveQueue, this, nextQueue));
             }
             else {
                 notServedCustomers++;
