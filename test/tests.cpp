@@ -13,7 +13,7 @@ TEST(TEST1, test1) {
     supermarket.startShopping();
   
     int result = supermarket.getAmountOfNotServedCustomers();
-    ASSERT_EQ(0, result);
+    ASSERT_EQ(supermarket.getAmountOfNotServedCustomers(), 0);
 }
 
 TEST(TEST2, test2) {
